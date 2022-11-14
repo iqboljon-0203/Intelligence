@@ -131,12 +131,13 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", showModalByScroll);
   ///Class
   class MenuCard {
-    constructor(src, alt, title, decription, price,parentSelector) {
+    constructor(src, alt, title, decription, price,parentSelector,...classes) {
       this.src = src;
       this.alt = alt;
       this.title = title;
       this.decription = decription;
       this.price = price;
+      this.classes=classes;
       this.parent=document.querySelector(parentSelector);
       this.transfer = 11000;
       this.changeToUZS();
@@ -146,8 +147,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     render() {
       const element = document.createElement("div");
+      if(this.classes.length===0){
+        this.element='menu__item';
+        element.classList.add(this.element);
+      }else{
+        this.classes.forEach((classname)=>element.classList.add(classname));
+      }
       element.innerHTML = `
-            <div class="menu__item">
             <img src=${this.src} alt=${this.alt} />
             <h3 class="menu__item-subtitle">${this.title}</h3>
             <div class="menu__item-descr">
@@ -158,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="menu__item-cost">Price:</div>
               <div class="menu__item-total"><span>${this.price}</span> uzs/month</div>
             </div>
-          </div>
         `;
         this.parent.append(element);
     }
@@ -169,7 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
     'Plan "Usual"',
     "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in",
     10,
-    '.menu .container'
+    '.menu .container',
+    'menu__item'
   ).render();
   new MenuCard(
     "img/tabs/2.jpg",
@@ -177,7 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
     'Plan "Premium"',
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.',
     20,
-    '.menu .container'
+    '.menu .container',
+    'menu__item'
   ).render();
   new MenuCard(
     "img/tabs/3.jpg",
@@ -185,7 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
     'Plan "Vip"',
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.',
     15,
-    '.menu .container'
+    '.menu .container',
+    'menu__item'
   ).render();
 });
 // console.log(document.documentElement.clientWidth);
